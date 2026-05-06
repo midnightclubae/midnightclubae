@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Midnight Club AE</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#000;
+    color:white;
+    font-family:'Poppins',sans-serif;
+    overflow-x:hidden;
+}
+
+/* BACKGROUND GLOW */
+body::before{
+    content:'';
+    position:fixed;
+    width:800px;
+    height:800px;
+    background:radial-gradient(circle, rgba(255,0,0,0.18), transparent 70%);
+    top:-300px;
+    right:-300px;
+    z-index:-1;
+}
+
+body::after{
+    content:'';
+    position:fixed;
+    width:700px;
+    height:700px;
+    background:radial-gradient(circle, rgba(255,0,0,0.12), transparent 70%);
+    bottom:-300px;
+    left:-300px;
+    z-index:-1;
+}
+
+/* NAVBAR */
+header{
+    position:fixed;
+    top:0;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 70px;
+    z-index:1000;
+    backdrop-filter:blur(12px);
+    background:rgba(0,0,0,0.4);
+    border-bottom:1px solid rgba(255,0,0,0.15);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.logo img{
+    width:60px;
+    height:60px;
+    object-fit:contain;
+}
+
+.logo h1{
+    font-family:'Orbitron',sans-serif;
+    font-size:24px;
+    letter-spacing:2px;
+}
+
+.logo span{
+    color:#ff0000;
+}
+
+nav a{
+    text-decoration:none;
+    color:white;
+    margin-left:35px;
+    position:relative;
+    font-weight:500;
+    transition:0.3s;
+}
+
+nav a:hover{
+    color:#ff0000;
+}
+
+nav a::after{
+    content:'';
+    position:absolute;
+    left:0;
+    bottom:-6px;
+    width:0;
+    height:2px;
+    background:#ff0000;
+    transition:0.3s;
+}
+
+nav a:hover::after{
+    width:100%;
+}
+
+/* HERO */
+.hero{
+    height:100vh;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    overflow:hidden;
+}
+
+.hero-video{
+    position:absolute;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0.3;
+}
+
+.hero-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to bottom, rgba(0,0,0,0.4), #000);
+}
+
+.hero-content{
+    position:relative;
+    z-index:10;
+    animation:fadeUp 1.5s ease;
+}
+
+.hero-content img{
+    width:220px;
+    margin-bottom:25px;
+    filter:drop-shadow(0 0 20px rgba(255,0,0,0.4));
+}
+
+.hero-content h2{
+    font-family:'Orbitron',sans-serif;
+    font-size:72px;
+    letter-spacing:4px;
+    margin-bottom:20px;
+}
+
+.hero-content h2 span{
+    color:#ff0000;
+}
+
+.hero-content p{
+    max-width:700px;
+    margin:auto;
+    color:#cfcfcf;
+    font-size:18px;
+    line-height:1.7;
+}
+
+.hero-buttons{
+    margin-top:40px;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:14px 34px;
+    border:1px solid #ff0000;
+    color:#ff0000;
+    text-decoration:none;
+    transition:0.3s;
+    font-weight:600;
+    letter-spacing:1px;
+}
+
+.btn:hover{
+    background:#ff0000;
+    color:black;
+    box-shadow:0 0 25px rgba(255,0,0,0.5);
+}
+
+.btn-filled{
+    background:#ff0000;
+    color:black;
+}
+
+.btn-filled:hover{
+    transform:translateY(-3px);
+}
+
+/* SECTIONS */
+section{
+    padding:120px 80px;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:70px;
+}
+
+.section-title h3{
+    color:#ff0000;
+    font-size:18px;
+    letter-spacing:3px;
+    margin-bottom:15px;
+}
+
+.section-title h2{
+    font-family:'Orbitron',sans-serif;
+    font-size:48px;
+}
+
+/* ABOUT */
+.about-container{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+    align-items:center;
+}
+
+.about-image{
+    height:500px;
+    border-radius:25px;
+    overflow:hidden;
+    border:1px solid rgba(255,0,0,0.2);
+    box-shadow:0 0 40px rgba(255,0,0,0.1);
+}
+
+.about-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.about-text p{
+    color:#c8c8c8;
+    line-height:1.9;
+    margin-bottom:25px;
+}
+
+.stats{
+    display:flex;
+    gap:30px;
+    margin-top:35px;
+    flex-wrap:wrap;
+}
+
+.stat-box{
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,0,0,0.2);
+    padding:25px;
+    min-width:170px;
+    border-radius:18px;
+}
+
+.stat-box h4{
+    font-size:38px;
+    color:#ff0000;
+    font-family:'Orbitron',sans-serif;
+}
+
+/* EVENTS */
+.events-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:30px;
+}
+
+.event-card{
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,0,0,0.18);
+    border-radius:25px;
+    overflow:hidden;
+    transition:0.4s;
+    backdrop-filter:blur(12px);
+}
+
+.event-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 0 35px rgba(255,0,0,0.2);
+}
+
+.event-card img{
+    width:100%;
+    height:250px;
+    object-fit:cover;
+}
+
+.event-content{
+    padding:30px;
+}
+
+.event-content h4{
+    font-size:24px;
+    margin-bottom:15px;
+    font-family:'Orbitron',sans-serif;
+}
+
+.event-content p{
+    color:#cfcfcf;
+    line-height:1.8;
+}
+
+/* CONTACT */
+.contact-box{
+    max-width:900px;
+    margin:auto;
+    text-align:center;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,0,0,0.18);
+    padding:70px;
+    border-radius:30px;
+    backdrop-filter:blur(15px);
+}
+
+.contact-box h2{
+    font-family:'Orbitron',sans-serif;
+    font-size:48px;
+    margin-bottom:20px;
+}
+
+.contact-box p{
+    color:#cfcfcf;
+    margin-bottom:35px;
+    line-height:1.8;
+}
+
+/* COMING SOON */
+.coming-soon{
+    text-align:center;
+    padding:100px 20px;
+}
+
+.coming-soon h1{
+    font-family:'Orbitron',sans-serif;
+    font-size:90px;
+    color:#ff0000;
+    letter-spacing:10px;
+    text-shadow:0 0 30px rgba(255,0,0,0.5);
+}
+
+.coming-soon p{
+    margin-top:20px;
+    color:#bdbdbd;
+    font-size:18px;
+}
+
+/* FOOTER */
+footer{
+    padding:35px;
+    text-align:center;
+    border-top:1px solid rgba(255,255,255,0.08);
+    color:#8e8e8e;
+}
+
+/* ANIMATION */
+.fade-up{
+    opacity:0;
+    transform:translateY(60px);
+    transition:1s ease;
+}
+
+.fade-up.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* MOBILE */
+@media(max-width:900px){
+
+header{
+    padding:20px 30px;
+}
+
+nav{
+    display:none;
+}
+
+.hero-content h2{
+    font-size:42px;
+}
+
+.about-container{
+    grid-template-columns:1fr;
+}
+
+section{
+    padding:100px 30px;
+}
+
+.contact-box{
+    padding:50px 25px;
+}
+
+.coming-soon h1{
+    font-size:50px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HERO VIDEO -->
+<video autoplay muted loop playsinline class="hero-video">
+    <source src="https://cdn.coverr.co/videos/coverr-driving-a-sports-car-at-night-1560678983888?download=1080p" type="video/mp4">
+</video>
+
+<div class="hero-overlay"></div>
+
+<!-- NAVBAR -->
+<header>
+
+<div class="logo">
+    <img src="logo.png" alt="MCAE Logo">
+    <h1>MC<span>AE</span></h1>
+</div>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#events">Events</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+
+<div class="hero-content">
+
+<img src="logo.png" alt="logo">
+
+<h2>DRIVE THE <span>ELITE</span></h2>
+
+<p>
+Midnight Club AE is a luxury automotive collective uniting performance, exclusivity, and the UAE car culture into one elite experience.
+</p>
+
+<div class="hero-buttons">
+    <a href="#events" class="btn btn-filled">Explore Events</a>
+    <a href="#contact" class="btn">Contact Us</a>
+</div>
+
+</div>
+
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="fade-up">
+
+<div class="section-title">
+    <h3>ABOUT US</h3>
+    <h2>Built Around Passion</h2>
+</div>
+
+<div class="about-container">
+
+<div class="about-image">
+    <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1600&auto=format&fit=crop" alt="Luxury Car">
+</div>
+
+<div class="about-text">
+
+<p>
+Midnight Club AE was created for those who live for performance, luxury, and the adrenaline of the automotive lifestyle.
+</p>
+
+<p>
+Every event, every member, and every experience is built around exclusivity and elite automotive passion.
+</p>
+
+<div class="stats">
+
+<div class="stat-box">
+    <h4>150+</h4>
+    <span>Members</span>
+</div>
+
+<div class="stat-box">
+    <h4>20+</h4>
+    <span>Events</span>
+</div>
+
+<div class="stat-box">
+    <h4>100M+</h4>
+    <span>AED Garage Value</span>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- EVENTS -->
+<section id="events" class="fade-up">
+
+<div class="section-title">
+    <h3>EXCLUSIVE EVENTS</h3>
+    <h2>Luxury Experiences</h2>
+</div>
+
+<div class="events-grid">
+
+<div class="event-card">
+
+<img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?q=80&w=1600&auto=format&fit=crop" alt="Event">
+
+<div class="event-content">
+    <h4>Midnight Run</h4>
+    <p>
+    Dubai night cruises featuring exotic and luxury vehicles.
+    </p>
+</div>
+
+</div>
+
+<div class="event-card">
+
+<img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1600&auto=format&fit=crop" alt="Event">
+
+<div class="event-content">
+    <h4>VIP Gathering</h4>
+    <p>
+    Private member-only luxury automotive experiences.
+    </p>
+</div>
+
+</div>
+
+<div class="event-card">
+
+<img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=1600&auto=format&fit=crop" alt="Event">
+
+<div class="event-content">
+    <h4>Track Sessions</h4>
+    <p>
+    High-performance track experiences for enthusiasts.
+    </p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="fade-up">
+
+<div class="contact-box">
+
+<h2>Contact MCAE</h2>
+
+<p>
+Applications and collaborations can be reached directly through our official email.
+</p>
+
+<p style="font-size:22px; color:#ff4d4d;">
+rb@midnight-club-ae.com
+</p>
+
+<a href="mailto:rb@midnight-club-ae.com" class="btn btn-filled">CONTACT NOW</a>
+
+</div>
+
+</section>
+
+<!-- COMING SOON -->
+<section class="coming-soon fade-up">
+
+<h1>COMING SOON</h1>
+
+<p>
+The next generation of UAE automotive culture is arriving.
+</p>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+© 2026 Midnight Club AE — All Rights Reserved
+</footer>
+
+<script>
+
+const observer = new IntersectionObserver((entries)=>{
+
+entries.forEach((entry)=>{
+
+if(entry.isIntersecting){
+    entry.target.classList.add('show');
+}
+
+});
+
+},{threshold:0.2});
+
+const hiddenElements = document.querySelectorAll('.fade-up');
+
+hiddenElements.forEach((el)=>observer.observe(el));
+
+</script>
+
+</body>
+</html>
